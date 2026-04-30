@@ -93,3 +93,8 @@ def test_verify_signature(signed_message, ed25519_keypair_alice):
 
     tampered_cp = {**received_cp, "content": base64.b64encode(b"Bye").decode("ascii")}
     assert crypto.verify_signature(alice_pub, tampered_cp, signature_bytes) is False
+
+
+def test_verify_signature_raises_on_invalid_key_type():
+    with pytest.raises(AttributeError):
+        crypto.verify_signature("not_a_key", {"test": "data"}, b"bad_signature")
