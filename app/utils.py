@@ -1,6 +1,7 @@
 import secrets
 import datetime
 import os
+import app.constants as constants
 
 
 def generate_timestamp():
@@ -13,3 +14,11 @@ def generate_nonce() -> bytes:
 
 def get_project_root():
     return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+
+def compose_sign_message(fixed_message, pin_code=""):
+    if pin_code:
+        return (
+            f"{fixed_message}\n{constants.PIN_WARNING}\n{constants.PIN_LABEL}{pin_code}"
+        )
+    return fixed_message

@@ -1,10 +1,10 @@
 import pytest
 from web3 import Web3
 from app.wallet import get_wallet
-from eth_account import Account
 from eth_account.messages import encode_defunct
 import app.crypto as crypto
-from app.constants import FIXED_MESSAGE, PIN_WARNING, PIN_LABEL
+import app.constants as constants
+import app.utils as utils
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def sign_message(w3, wallet):
 
 @pytest.fixture
 def signature_alice(sign_message):
-    message = compose_sign_message(FIXED_MESSAGE)
+    message = utils.compose_sign_message(constants.FIXED_MESSAGE)
     return sign_message(message)
 
 
@@ -72,9 +72,3 @@ def shared_secret(keypair_alice, keypair_bob):
 @pytest.fixture
 def ed25519_keypair_alice(master_key_alice):
     return crypto.derive_ed25519_keypair(master_key_alice)
-
-
-def compose_sign_message(fixed_message, pin_code=""):
-    if pin_code:
-        return f"{fixed_message}\n{PIN_WARNING}\n{PIN_LABEL}{pin_code}"
-    return fixed_message
