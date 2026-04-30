@@ -4,6 +4,7 @@ from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import x25519, ed25519
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.exceptions import InvalidSignature
 import app.utils as utils
 
 SALT = b"bytestream_salt_v1"
@@ -53,5 +54,5 @@ def verify_signature(public_key, content_package, signature_bytes):
     try:
         public_key.verify(signature_bytes, canonical.encode())
         return True
-    except Exception:
+    except InvalidSignature:
         return False
