@@ -4,8 +4,7 @@ from app.wallet import get_wallet
 from eth_account import Account
 from eth_account.messages import encode_defunct
 import app.crypto as crypto
-
-FIXED_MESSAGE = "SuperChat fixed message for Alice"
+from app.constants import FIXED_MESSAGE
 
 
 @pytest.fixture
