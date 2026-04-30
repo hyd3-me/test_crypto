@@ -11,3 +11,7 @@ def test_pin_warning():
         "WARNING: You have set a PIN code. You must remember it to recover your keys."
     )
     assert constants.PIN_WARNING == expected
+
+
+def test_pin_label():
+    assert constants.PIN_LABEL == "PIN: "
