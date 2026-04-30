@@ -4,7 +4,7 @@ from app.wallet import get_wallet
 from eth_account import Account
 from eth_account.messages import encode_defunct
 import app.crypto as crypto
-from app.constants import FIXED_MESSAGE
+from app.constants import FIXED_MESSAGE, PIN_WARNING, PIN_LABEL
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def sign_message(w3, wallet):
 
 @pytest.fixture
 def signature_alice(w3, wallet):
-    message = FIXED_MESSAGE
+    message = compose_sign_message(FIXED_MESSAGE)
     message_hash = encode_defunct(text=message)
     return w3.eth.account.sign_message(message_hash, private_key=wallet.key).signature
 
@@ -77,6 +77,5 @@ def ed25519_keypair_alice(master_key_alice):
 
 def compose_sign_message(fixed_message, pin_code=""):
     if pin_code:
-        warning = "WARNING: You have set a PIN code. You must remember it to recover your keys."
-        return f"{fixed_message}\n{warning}\nPIN: {pin_code}"
+        return f"{fixed_message}\n{PIN_WARNING}\n{PIN_LABEL}{pin_code}"
     return fixed_message
