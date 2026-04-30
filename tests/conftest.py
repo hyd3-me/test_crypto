@@ -5,6 +5,8 @@ from eth_account import Account
 from eth_account.messages import encode_defunct
 import app.crypto as crypto
 
+FIXED_MESSAGE = "SuperChat fixed message for Alice"
+
 
 @pytest.fixture
 def w3():
@@ -29,7 +31,7 @@ def sign_message(w3, wallet):
 
 @pytest.fixture
 def signature_alice(w3, wallet):
-    message = "SuperChat fixed message for Alice"
+    message = FIXED_MESSAGE
     message_hash = encode_defunct(text=message)
     return w3.eth.account.sign_message(message_hash, private_key=wallet.key).signature
 
@@ -72,3 +74,10 @@ def shared_secret(keypair_alice, keypair_bob):
 @pytest.fixture
 def ed25519_keypair_alice(master_key_alice):
     return crypto.derive_ed25519_keypair(master_key_alice)
+
+
+def compose_sign_message(fixed_message, pin_code=""):
+    if pin_code:
+        warning = "WARNING: You have set a PIN code. You must remember it to recover your keys."
+        return f"{fixed_message}\n{warning}\nPIN: {pin_code}"
+    return fixed_message
