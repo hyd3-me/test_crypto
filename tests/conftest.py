@@ -29,10 +29,9 @@ def sign_message(w3, wallet):
 
 
 @pytest.fixture
-def signature_alice(w3, wallet):
+def signature_alice(sign_message):
     message = compose_sign_message(FIXED_MESSAGE)
-    message_hash = encode_defunct(text=message)
-    return w3.eth.account.sign_message(message_hash, private_key=wallet.key).signature
+    return sign_message(message)
 
 
 @pytest.fixture
