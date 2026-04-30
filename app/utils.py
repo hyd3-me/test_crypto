@@ -1,5 +1,6 @@
 import secrets
 import datetime
+import os
 
 
 def generate_timestamp():
@@ -8,3 +9,7 @@ def generate_timestamp():
 
 def generate_nonce() -> bytes:
     return secrets.token_bytes(12)
+
+
+def get_project_root():
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))

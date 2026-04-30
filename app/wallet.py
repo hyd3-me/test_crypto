@@ -1,10 +1,12 @@
 import os
 from dotenv import load_dotenv, set_key
 from eth_account import Account
+import app.utils as utils
 
 Account.enable_unaudited_hdwallet_features()
 
-ENV_FILE = os.path.join(os.path.dirname(__file__), "..", ".env")
+
+ENV_FILE = os.path.join(utils.get_project_root(), ".env")
 
 
 def _save_private_key(private_key_hex):
