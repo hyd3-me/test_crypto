@@ -25,3 +25,11 @@ def test_sign_message_same_pin_identical(sign_message):
     sig1 = sign_message(message1)
     sig2 = sign_message(message2)
     assert sig1 == sig2
+
+
+def test_sign_message_different_pin_different(sign_message):
+    msg1 = compose_sign_message(FIXED_MESSAGE, "1111")
+    msg2 = compose_sign_message(FIXED_MESSAGE, "2222")
+    sig1 = sign_message(msg1)
+    sig2 = sign_message(msg2)
+    assert sig1 != sig2
