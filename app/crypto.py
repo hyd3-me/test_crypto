@@ -15,7 +15,7 @@ def derive_master_key(signature_bytes: bytes) -> bytes:
     hkdf = HKDF(
         algorithm=hashes.SHA256(),
         length=KEY_LENGTH,
-        salt=b"superchat_salt_v1",
+        salt=SALT,
         info=b"master_key",
     )
     return hkdf.derive(signature_bytes)

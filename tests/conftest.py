@@ -17,6 +17,17 @@ def wallet():
 
 
 @pytest.fixture
+def sign_message(w3, wallet):
+    def _sign(message):
+        message_hash = encode_defunct(text=message)
+        return w3.eth.account.sign_message(
+            message_hash, private_key=wallet.key
+        ).signature
+
+    return _sign
+
+
+@pytest.fixture
 def signature_alice(w3, wallet):
     message = "SuperChat fixed message for Alice"
     message_hash = encode_defunct(text=message)
