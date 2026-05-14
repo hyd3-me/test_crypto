@@ -53,3 +53,11 @@ def test_compute_content_hash_empty_message_id_raises():
     content = b"hello"
     with pytest.raises(ValueError):
         utils.compute_content_hash(b"", content)
+
+
+def test_compute_content_hash_ordering():
+    msg_id = b"\x00" * 12
+    content = b"data"
+    hash1 = utils.compute_content_hash(msg_id, content)
+    hash2 = utils.compute_content_hash(content, msg_id)
+    assert hash1 != hash2
