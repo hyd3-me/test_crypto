@@ -24,3 +24,12 @@ def test_compute_content_hash_different_content():
     h1 = utils.compute_content_hash(msg_id, content1)
     h2 = utils.compute_content_hash(msg_id, content2)
     assert h1 != h2
+
+
+def test_compute_content_hash_different_message_id():
+    msg_id1 = b"\x00" * 12
+    msg_id2 = b"\x01" * 12
+    content = b"hello"
+    h1 = utils.compute_content_hash(msg_id1, content)
+    h2 = utils.compute_content_hash(msg_id2, content)
+    assert h1 != h2
