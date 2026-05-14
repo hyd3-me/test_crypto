@@ -1,4 +1,5 @@
 import secrets
+import hashlib
 import time
 import os
 import app.constants as constants
@@ -23,3 +24,7 @@ def compose_sign_message(fixed_message, pin_code=""):
             f"{fixed_message}\n{constants.PIN_WARNING}\n{constants.PIN_LABEL}{pin_code}"
         )
     return fixed_message
+
+
+def compute_content_hash(message_id: bytes, content: bytes) -> bytes:
+    return hashlib.sha256(message_id + content).digest()
