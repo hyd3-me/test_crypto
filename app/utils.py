@@ -1,5 +1,6 @@
 import secrets
 import hashlib
+import struct
 import time
 import os
 import app.constants as constants
@@ -32,3 +33,9 @@ def compute_content_hash(message_id: bytes, content: bytes) -> bytes:
     if not content:
         raise ValueError("content must not be empty")
     return hashlib.sha256(message_id + content).digest()
+
+
+def build_sign_payload(
+    message_id: bytes, timestamp_ms: int, content_hash: bytes
+) -> bytes:
+    return message_id + struct.pack(">Q", timestamp_ms) + content_hash
