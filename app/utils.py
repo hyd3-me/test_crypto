@@ -1,14 +1,15 @@
 import secrets
-import datetime
+import time
 import os
 import app.constants as constants
 
 
 def generate_timestamp():
-    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+    return time.time_ns() // 1_000_000
 
 
 def generate_nonce() -> bytes:
+    """Return 12 random bytes for use as message_id and AES-GCM nonce."""
     return secrets.token_bytes(12)
 
 
