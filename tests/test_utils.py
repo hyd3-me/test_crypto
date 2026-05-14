@@ -61,3 +61,13 @@ def test_compute_content_hash_ordering():
     hash1 = utils.compute_content_hash(msg_id, content)
     hash2 = utils.compute_content_hash(content, msg_id)
     assert hash1 != hash2
+
+
+def test_build_sign_payload_deterministic():
+    msg_id = b"\x00" * 12
+    ts = 1000
+    content_hash = b"\x01" * 32
+    payload1 = utils.build_sign_payload(msg_id, ts, content_hash)
+    payload2 = utils.build_sign_payload(msg_id, ts, content_hash)
+    assert payload1 == payload2
+    assert len(payload1) == 52
