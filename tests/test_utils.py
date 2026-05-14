@@ -33,3 +33,10 @@ def test_compute_content_hash_different_message_id():
     h1 = utils.compute_content_hash(msg_id1, content)
     h2 = utils.compute_content_hash(msg_id2, content)
     assert h1 != h2
+
+
+def test_compute_content_hash_length():
+    msg_id = b"\x00" * 12
+    content = b"anything"
+    result = utils.compute_content_hash(msg_id, content)
+    assert len(result) == 32
