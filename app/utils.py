@@ -27,4 +27,6 @@ def compose_sign_message(fixed_message, pin_code=""):
 
 
 def compute_content_hash(message_id: bytes, content: bytes) -> bytes:
+    if not content:
+        raise ValueError("content must not be empty")
     return hashlib.sha256(message_id + content).digest()
