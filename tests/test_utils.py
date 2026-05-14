@@ -1,4 +1,5 @@
 import os
+import pytest
 import app.utils as utils
 
 
@@ -40,3 +41,9 @@ def test_compute_content_hash_length():
     content = b"anything"
     result = utils.compute_content_hash(msg_id, content)
     assert len(result) == 32
+
+
+def test_compute_content_hash_empty_content_raises():
+    msg_id = b"\x00" * 12
+    with pytest.raises(ValueError):
+        utils.compute_content_hash(msg_id, b"")
