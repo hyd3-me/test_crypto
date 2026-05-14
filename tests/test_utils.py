@@ -47,3 +47,9 @@ def test_compute_content_hash_empty_content_raises():
     msg_id = b"\x00" * 12
     with pytest.raises(ValueError):
         utils.compute_content_hash(msg_id, b"")
+
+
+def test_compute_content_hash_empty_message_id_raises():
+    content = b"hello"
+    with pytest.raises(ValueError):
+        utils.compute_content_hash(b"", content)
