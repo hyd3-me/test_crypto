@@ -60,3 +60,11 @@ def verify_signature(public_key, content_package, signature_bytes):
 
 def sign_payload(private_key, payload: bytes) -> bytes:
     return private_key.sign(payload)
+
+
+def verify_payload(public_key, payload: bytes, signature: bytes) -> bool:
+    try:
+        public_key.verify(signature, payload)
+        return True
+    except InvalidSignature:
+        return False
