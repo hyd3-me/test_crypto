@@ -85,3 +85,13 @@ def test_build_sign_payload_empty_content_hash_raises():
     ts = 1000
     with pytest.raises(ValueError):
         utils.build_sign_payload(msg_id, ts, b"")
+
+
+def test_build_sign_payload_timestamp_packing():
+    msg_id = b"\x00" * 12
+    ts = 1000
+    content_hash = b"\x01" * 32
+    payload = utils.build_sign_payload(msg_id, ts, content_hash)
+    ts_bytes = payload[12:20]
+    expected = b"\x00\x00\x00\x00\x00\x00\x03\xe8"
+    assert ts_bytes == expected
