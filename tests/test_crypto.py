@@ -15,3 +15,10 @@ def test_sign_payload_deterministic(ed25519_keypair_alice):
     sig1 = crypto.sign_payload(private_key, payload)
     sig2 = crypto.sign_payload(private_key, payload)
     assert sig1 == sig2
+
+
+def test_verify_payload_valid_signature(ed25519_keypair_alice):
+    private_key, public_key = ed25519_keypair_alice
+    payload = b"0" * 52
+    sig = crypto.sign_payload(private_key, payload)
+    assert crypto.verify_payload(public_key, payload, sig) is True
