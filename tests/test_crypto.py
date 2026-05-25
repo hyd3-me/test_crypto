@@ -22,3 +22,10 @@ def test_verify_payload_valid_signature(ed25519_keypair_alice):
     payload = b"0" * 52
     sig = crypto.sign_payload(private_key, payload)
     assert crypto.verify_payload(public_key, payload, sig) is True
+
+
+def test_verify_payload_invalid_signature(ed25519_keypair_alice):
+    _, public_key = ed25519_keypair_alice
+    payload = b"0" * 52
+    bad_sig = b"\x00" * 64
+    assert crypto.verify_payload(public_key, payload, bad_sig) is False
