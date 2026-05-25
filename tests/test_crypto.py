@@ -9,3 +9,11 @@ def test_sign_payload_returns_64_bytes():
     sig = crypto.sign_payload(private_key, payload)
     assert isinstance(sig, bytes)
     assert len(sig) == 64
+
+
+def test_sign_payload_deterministic():
+    private_key = Ed25519PrivateKey.generate()
+    payload = b"1" * 52
+    sig1 = crypto.sign_payload(private_key, payload)
+    sig2 = crypto.sign_payload(private_key, payload)
+    assert sig1 == sig2
