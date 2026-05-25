@@ -71,3 +71,10 @@ def test_build_sign_payload_deterministic():
     payload2 = utils.build_sign_payload(msg_id, ts, content_hash)
     assert payload1 == payload2
     assert len(payload1) == 52
+
+
+def test_build_sign_payload_empty_message_id_raises():
+    ts = 1000
+    content_hash = b"\x01" * 32
+    with pytest.raises(ValueError):
+        utils.build_sign_payload(b"", ts, content_hash)
