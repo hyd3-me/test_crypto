@@ -38,4 +38,6 @@ def compute_content_hash(message_id: bytes, content: bytes) -> bytes:
 def build_sign_payload(
     message_id: bytes, timestamp_ms: int, content_hash: bytes
 ) -> bytes:
+    if not message_id:
+        raise ValueError("message_id must not be empty")
     return message_id + struct.pack(">Q", timestamp_ms) + content_hash
