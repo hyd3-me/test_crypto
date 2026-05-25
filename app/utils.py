@@ -40,4 +40,6 @@ def build_sign_payload(
 ) -> bytes:
     if not message_id:
         raise ValueError("message_id must not be empty")
+    if not content_hash:
+        raise ValueError("content_hash must not be empty")
     return message_id + struct.pack(">Q", timestamp_ms) + content_hash
