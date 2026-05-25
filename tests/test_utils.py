@@ -78,3 +78,10 @@ def test_build_sign_payload_empty_message_id_raises():
     content_hash = b"\x01" * 32
     with pytest.raises(ValueError):
         utils.build_sign_payload(b"", ts, content_hash)
+
+
+def test_build_sign_payload_empty_content_hash_raises():
+    msg_id = b"\x00" * 12
+    ts = 1000
+    with pytest.raises(ValueError):
+        utils.build_sign_payload(msg_id, ts, b"")
